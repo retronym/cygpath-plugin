@@ -37,7 +37,6 @@ import hudson.util.jna.JnaException;
 import hudson.util.jna.RegistryKey;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -83,7 +82,7 @@ public class CygpathLauncherDecorator extends LauncherDecorator {
                         return cmds;    // if the executable is a single token, it'll be found in PATH. "cygpath -w" would append the current directory in front, which won't work.
 
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    if(base.launch().cmds(getCygpathExe(),"-w",exe).stdout(out).join()==0) {
+                    if(base.launch().cmds("cygpath","-w",exe).stdout(out).join()==0) {
                         // replace by the converted path
                         String cmd = out.toString().trim();
                         if(cmd.length()>0)
